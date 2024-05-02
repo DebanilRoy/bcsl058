@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <unistd.h>
 using namespace std;
 
 #define N 4
@@ -20,7 +21,7 @@ int diff (float equat[N]) {
     if (t == 1){
         for (i = 0; i < N - 1; i++) {
             value[i + 1] = ((N - 1) - i) * equat[i];
-        }
+        }iff(equat)
         return 1;
     }
     else {
@@ -41,7 +42,7 @@ float fx (float equat[N], float x) {
 void newton_raphson (float equat[N], float range[2]){
     int i;
     float x = (range[0] + range[1]) / 2;
-    int t = diff(equat);
+    int t = 1;
     
     while (t != 0){
         float fofx = fx(equat, x);
@@ -51,6 +52,7 @@ void newton_raphson (float equat[N], float range[2]){
             return;
         }
         else {
+            t = diff(equat);
             x = x - (fx(equat,x)/fx(value, x)); 
             cout<<"New x = "<<x<<endl;
         }
