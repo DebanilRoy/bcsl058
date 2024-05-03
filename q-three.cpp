@@ -1,17 +1,63 @@
 #include <iostream>
 #include <cmath>
+#include <unistd.h>
 using namespace std;
 
 #define N 4
 
 float value[N];
+float equation[N] = {1, 2, 0, -19};
+float range[2] = {1 , 2};
 
-void diff (float equat[N]) {
-    int i;    
+int diff (float equat[N]) {
+    int i;
+    int t;
     for (i = 0; i < N - 1; i++) {
-        value[i + 1] = ((N - 1) - i) * equat[i];
+        if (equat[0] != 0) {
+            t = 1;
+        }
+    }
+    
+    if (t == 1){
+        for (i = 0; i < N - 1; i++) {
+            value[i + 1] = ((N - 1) - i) * equat[i];
+        }iff(equat)
+        return 1;
+    }
+    else {
+        return 0;
     }
 }
+ 
+float fx (float equat[N], float x) {
+    int i;
+    float fx;
+    for (i = 0; i < N; i++) {
+        fx = fx + equat[i] * pow(x, (N - 1) - i);
+    }
+    return fx;
+
+};
+
+void newton_raphson (float equat[N], float range[2]){
+    int i;
+    float x = (range[0] + range[1]) / 2;
+    int t = 1;
+    
+    while (t != 0){
+        float fofx = fx(equat, x);
+        cout<<"For x = "<<x<<" f(x) = "<<fofx<<endl;
+        if (fofx == 0) {
+            cout<<"x = "<<x<<endl;
+            return;
+        }
+        else {
+            t = diff(equat);
+            x = x - (fx(equat,x)/fx(value, x)); 
+            cout<<"New x = "<<x<<endl;
+        }
+    }
+};
 
 void print_equation (float equat [N]) {
     int i;
@@ -23,7 +69,5 @@ void print_equation (float equat [N]) {
 };
 
 int main () {
-    float equation[N] = {5, 6, 3, -19};
-    diff(equation);
-    print_equation(value);
+    newton_raphson (equation, range);
 }
