@@ -6,14 +6,21 @@ using namespace std;
 #define N 4
 
 float value[N];
-float equation[N] = {1, 2, 0, -19};
+float equation[N] = {1, 4, 0, -19};
 float range[2] = {1 , 2};
 
-int diff (float equat[N]) {
+void copyEquation (float c[], float p[]) {
+    int i;
+    for (i = 0; i < N; i++) {
+        p[i] = c[i];
+    }
+}
+
+int diff (float equat[]) {
     int i;
     int t;
     for (i = 0; i < N - 1; i++) {
-        if (equat[0] != 0) {
+        if (equat[i] != 0) {
             t = 1;
         }
     }
@@ -21,7 +28,7 @@ int diff (float equat[N]) {
     if (t == 1){
         for (i = 0; i < N - 1; i++) {
             value[i + 1] = ((N - 1) - i) * equat[i];
-        }iff(equat)
+        }
         return 1;
     }
     else {
@@ -29,33 +36,35 @@ int diff (float equat[N]) {
     }
 }
  
-float fx (float equat[N], float x) {
+float fx (float equat[], float x) {
     int i;
-    float fx;
+    float fx = 0;
     for (i = 0; i < N; i++) {
-        fx = fx + equat[i] * pow(x, (N - 1) - i);
+        fx = fx + (equat[i] * pow(x, (N - 1) - i));
     }
     return fx;
 
 };
 
-void newton_raphson (float equat[N], float range[2]){
+void newton_raphson (float equat[], float x){
     int i;
-    float x = (range[0] + range[1]) / 2;
     int t = 1;
-    
-    while (t != 0){
-        float fofx = fx(equat, x);
-        cout<<"For x = "<<x<<" f(x) = "<<fofx<<endl;
-        if (fofx == 0) {
-            cout<<"x = "<<x<<endl;
-            return;
-        }
-        else {
-            t = diff(equat);
-            x = x - (fx(equat,x)/fx(value, x)); 
-            cout<<"New x = "<<x<<endl;
-        }
+    float copy[N] = {0, 0, 0, 0}; 
+    float fofx = fx(equat, x);
+    if (fofx == 0 && t != 0) {
+        cout<<"x = "<<x<<endl;
+        return;
+    }
+    else if (t != 0) {
+        copyEquation(value, copy);
+        t = diff(equat);
+        x = x - (fofx/fx(value, x)); 
+        newton_raphson(copy, x);
+        return;
+    }
+    else {
+        cout<<"Best approximation of x = "<<x<<endl;
+        return;
     }
 };
 
@@ -69,5 +78,5 @@ void print_equation (float equat [N]) {
 };
 
 int main () {
-    newton_raphson (equation, range);
+    newton_raphson (equation, 1.5);
 }
