@@ -17,7 +17,7 @@ void bisection(float equat[N], float range[2]) {
         cout<<"For x = "<<x<<" f(x) = "<<value<<endl;
         usleep(500000);
         if (value == 0 || (value > -0.01 && value < 0.01)) {
-            cout<<"x = "<<x<<endl;
+            cout<<"Using Bisection Method, x = "<<x<<endl;
             return;
         }
         else if (value < 0) {
